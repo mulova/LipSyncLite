@@ -1,0 +1,57 @@
+#
+# http://dmayance.com/git-and-unity-projects/
+#
+# =============== #
+# Unity generated #
+# =============== #
+Temp/
+/obj/
+UnityGenerated/
+Library/
+Logs/
+log.txt
+
+ 
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+ExportedObj/
+*.svd
+*.userprefs
+*.csproj
+*.pidb
+*.suo
+*.sln
+*.user
+*.unityproj
+*.booproj
+.localhistory
+ 
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+# Icon?
+ehthumbs.db
+Thumbs.db
+
+.vscode/
+.vscode/launch.json
+.vscode/settings.json
+.vs/
+
+.idea/
+.cache/
+
+# ========= #
+#   Font    #
+# ========= #
+
+.fake
+.ionide
+
+.vsconfig
