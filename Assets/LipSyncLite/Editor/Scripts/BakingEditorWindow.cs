@@ -85,10 +85,13 @@ namespace LipSyncLite
                                 switch (recognizerLanguage)
                                 {
                                     case ERecognizerLanguage.Japanese:
-                                        currentVowels = LipSync.vowelsJP;
+                                        currentVowels = LangData.JP.vowels;
                                         break;
                                     case ERecognizerLanguage.Chinese:
-                                        currentVowels = LipSync.vowelsCN;
+                                        currentVowels = LangData.CN.vowels;
+                                        break;
+                                    case ERecognizerLanguage.Korean:
+                                        currentVowels = LangData.KR.vowels;
                                         break;
                                 }
                                 for (int i = 0; i < currentVowels.Length; ++i)

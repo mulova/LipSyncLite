@@ -6,9 +6,6 @@ namespace LipSyncLite
     public class LipSync : MonoBehaviour 
     {
         #region Fields
-        public static string[] vowelsJP = { "a", "i", "u", "e", "o" };
-        public static string[] vowelsCN = { "a", "e", "i", "o", "u", "v" };
-
         public const int MAX_BLEND_VALUE_COUNT = 6;
 
         public ELipSyncMethod lipSyncMethod;
@@ -38,12 +35,12 @@ namespace LipSyncLite
         private LipSyncRuntimeRecognizer runtimeRecognizer;
         private string[] currentVowels;
         private Dictionary<string, int> vowelToIndexDict = new Dictionary<string, int>();
-        private int[] propertyIndexs = new int[MAX_BLEND_VALUE_COUNT];
+        private int[] propertyIndexs;
         private float blendValuesSum;
 
         private string recognizeResult;
-        private float[] targetBlendValues = new float[MAX_BLEND_VALUE_COUNT];
-        private float[] currentBlendValues = new float[MAX_BLEND_VALUE_COUNT];
+        private float[] targetBlendValues;
+        private float[] currentBlendValues;
         #region Fields for Live2D
         private float currentPropertyXValue;
         private float currentPropertyYValue;
@@ -70,18 +67,24 @@ namespace LipSyncLite
             switch (recognizerLanguage)
             {
                 case ERecognizerLanguage.Japanese:
-                    currentVowels = vowelsJP;
+                    currentVowels = LangData.JP.vowels;
                     break;
                 case ERecognizerLanguage.Chinese:
-                    currentVowels = vowelsCN;
+                    currentVowels = LangData.CN.vowels;
+                    break;
+                case ERecognizerLanguage.Korean:
+                    currentVowels = LangData.KR.vowels;
                     break;
             }
+            runtimeRecognizer = new LipSyncRuntimeRecognizer(recognizerLanguage, windowSize, amplitudeThreshold);
+            targetBlendValues = new float[currentVowels.Length];
+            currentBlendValues = new float[currentVowels.Length];
+            propertyIndexs = new int[currentVowels.Length];
             for (int i = 0; i < currentVowels.Length; ++i)
             {
                 vowelToIndexDict[currentVowels[i]] = i;
                 propertyIndexs[i] = targetBlendShapeObject.sharedMesh.GetBlendShapeIndex(propertyNames[i]);
             }
-            runtimeRecognizer = new LipSyncRuntimeRecognizer(recognizerLanguage, windowSize, amplitudeThreshold);
         }
 
         void Start()

@@ -28,12 +28,6 @@ namespace LipSyncLite
         private string[] currentVowels;
         private float[] currentVowelFormantCeilValues;
 
-        // TODO: Data-lization
-        private string[] vowelsByFormantJP = { "i", "u", "e", "o", "a" };
-        private float[] vowelFormantFloorJP = { 0.0f, 250.0f, 300.0f, 450.0f, 600.0f };
-        private string[] vowelsByFormantCN = { "i", "v", "u", "e", "o", "a" };
-        private float[] vowelFormantFloorCN = { 0.0f, 100.0f, 250.0f, 300.0f, 450.0f, 600.0f };
-
         public LipSyncRuntimeRecognizer(ERecognizerLanguage recognizingLanguage, int windowSize, float amplitudeThreshold)
         {
             this.recognizingLanguage = recognizingLanguage;
@@ -79,12 +73,16 @@ namespace LipSyncLite
                     switch (recognizingLanguage)
                     {
                         case ERecognizerLanguage.Japanese:
-                            currentVowels = vowelsByFormantJP;
-                            currentVowelFormantCeilValues = vowelFormantFloorJP;
+                            currentVowels = LangData.JP.vowelsByFormant;
+                            currentVowelFormantCeilValues = LangData.JP.vowelFormantCeil;
                             break;
                         case ERecognizerLanguage.Chinese:
-                            currentVowels = vowelsByFormantCN;
-                            currentVowelFormantCeilValues = vowelFormantFloorCN;
+                            currentVowels = LangData.CN.vowelsByFormant;
+                            currentVowelFormantCeilValues = LangData.CN.vowelFormantCeil;
+                            break;
+                        case ERecognizerLanguage.Korean:
+                            currentVowels = LangData.KR.vowelsByFormant;
+                            currentVowelFormantCeilValues = LangData.KR.vowelFormantCeil;
                             break;
                     }
                     for (int i = 0; i < currentVowelFormantCeilValues.Length; ++i)
@@ -113,6 +111,7 @@ namespace LipSyncLite
     public enum ERecognizerLanguage
     {
         Japanese,
-        Chinese
+        Chinese,
+        Korean
     }
 }

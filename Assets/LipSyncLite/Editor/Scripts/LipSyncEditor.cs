@@ -25,10 +25,13 @@ namespace LipSyncLite
                     switch (targetLipSync.recognizerLanguage)
                     {
                         case ERecognizerLanguage.Japanese:
-                            selectedVowels = LipSync.vowelsJP;
+                            selectedVowels = LangData.JP.vowels;
                             break;
                         case ERecognizerLanguage.Chinese:
-                            selectedVowels = LipSync.vowelsCN;
+                            selectedVowels = LangData.CN.vowels;
+                            break;
+                        case ERecognizerLanguage.Korean:
+                            selectedVowels = LangData.KR.vowels;
                             break;
                     }
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("targetType"));
@@ -39,7 +42,10 @@ namespace LipSyncLite
                         EditorGUILayout.BeginVertical(EditorStyles.textField);
                         {
                             SerializedProperty propertyNames = serializedObject.FindProperty("propertyNames");
-
+                            if (propertyNames.arraySize < selectedVowels.Length)
+                            {
+                                propertyNames.arraySize = selectedVowels.Length;
+                            }
 
                             for (int i = 0; i < selectedVowels.Length; ++i)
                             {
@@ -60,6 +66,11 @@ namespace LipSyncLite
                         EditorGUILayout.BeginVertical(EditorStyles.textField);
                         {
                             SerializedProperty paramMaxValues = serializedObject.FindProperty("paramMaxValues");
+
+                            if (paramMaxValues.arraySize < selectedVowels.Length)
+                            {
+                                paramMaxValues.arraySize = selectedVowels.Length;
+                            }
 
                             for (int i = 0; i < selectedVowels.Length; ++i)
                             {

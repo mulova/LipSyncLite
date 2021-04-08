@@ -28,12 +28,6 @@ namespace LipSyncLite
         private string[] currentVowels;
         private float[] currentVowelFormantCeilValues;
 
-        // TODO: Data-lization
-        private string[] vowelsByFormantJP = { "i", "u", "e", "o", "a" };
-        private float[] vowelFormantFloorJP = { 0.0f, 250.0f, 300.0f, 450.0f, 600.0f };
-        private string[] vowelsByFormantCN = { "i", "v", "u", "e", "o", "a" };
-        private float[] vowelFormantFloorCN = { 0.0f, 100.0f, 250.0f, 300.0f, 450.0f, 600.0f };
-
         public LipSyncOfflineRecognizer(ERecognizerLanguage recognizingLanguage, float amplitudeThreshold, int windowSize, int shiftStepSize)
         {
             this.recognizingLanguage = recognizingLanguage;
@@ -92,12 +86,16 @@ namespace LipSyncLite
                     switch (recognizingLanguage)
                     {
                         case ERecognizerLanguage.Japanese:
-                            currentVowels = vowelsByFormantJP;
-                            currentVowelFormantCeilValues = vowelFormantFloorJP;
+                            currentVowels = LangData.JP.vowelsByFormant;
+                            currentVowelFormantCeilValues = LangData.JP.vowelFormantFloor;
                             break;
                         case ERecognizerLanguage.Chinese:
-                            currentVowels = vowelsByFormantCN;
-                            currentVowelFormantCeilValues = vowelFormantFloorCN;
+                            currentVowels = LangData.CN.vowelsByFormant;
+                            currentVowelFormantCeilValues = LangData.CN.vowelFormantFloor;
+                            break;
+                        case ERecognizerLanguage.Korean:
+                            currentVowels = LangData.KR.vowelsByFormant;
+                            currentVowelFormantCeilValues = LangData.KR.vowelFormantFloor;
                             break;
                     }
                     for (int m = 0; m < currentVowelFormantCeilValues.Length; ++m)
